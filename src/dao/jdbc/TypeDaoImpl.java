@@ -93,7 +93,7 @@ public class TypeDaoImpl extends JdbcDao {
     public void update(Entity entity) throws DaoException {
         Type type = (Type) entity;
         PreparedStatement stmt;
-        String sqlReq = "UPDATE type SET libelle = ? WHERE idtype = ?";
+        String sqlReq = "UPDATE type SET libelletype = ? WHERE idtype = ?";
 
         try {
             stmt = connection.prepareStatement(sqlReq);

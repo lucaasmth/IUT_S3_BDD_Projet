@@ -1,11 +1,8 @@
 package test;//package test;
 
 import dao.Dao;
-import dao.jdbc.CategorieDaoImpl;
-import dao.jdbc.FactureDaoImpl;
-import dao.jdbc.TypeDaoImpl;
+import dao.jdbc.*;
 import dao.exception.DaoException;
-import dao.jdbc.VehiculeDaoImpl;
 import model.*;
 import sql.PostgresConnection;
 
