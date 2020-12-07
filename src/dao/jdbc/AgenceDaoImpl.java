@@ -28,7 +28,7 @@ public class AgenceDaoImpl extends JdbcDao {
                 Agence agence = new Agence();
                 agence.setId(resultSet.getInt("idagence"));
                 agence.setNbEmployes(resultSet.getInt("nbemployees"));
-                agence.setVille((Ville) villeDao.findById(resultSet.getInt("idagence")));
+                agence.setVille((Ville) villeDao.findById(resultSet.getInt("idville")));
                 agences.add(agence);
             }
         } catch (SQLException e) {
@@ -50,7 +50,7 @@ public class AgenceDaoImpl extends JdbcDao {
                 agence = new Agence();
                 agence.setId(resultSet.getInt("idagence"));
                 agence.setNbEmployes(resultSet.getInt("nbemployees"));
-                agence.setVille((Ville) villeDao.findById(resultSet.getInt("idagence")));
+                agence.setVille((Ville) villeDao.findById(resultSet.getInt("idville")));
             }
         } catch (SQLException e) {
             throw new DaoException(e);
