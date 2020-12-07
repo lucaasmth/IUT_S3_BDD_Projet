@@ -2,7 +2,6 @@ package dao.jdbc;
 
 import dao.exception.DaoException;
 import model.*;
-import model.Agence;
 
 import java.sql.*;
 import java.util.ArrayList;
