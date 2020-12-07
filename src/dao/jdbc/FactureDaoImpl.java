@@ -1,6 +1,7 @@
 package dao.jdbc;//package dao.jdbc;
 
 import dao.exception.DaoException;
+import model.Contrat;
 import model.Entity;
 import model.Facture;
 
