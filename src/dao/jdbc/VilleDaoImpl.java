@@ -3,8 +3,6 @@ package dao.jdbc;
 import dao.exception.DaoException;
 import model.Entity;
 import model.Ville;
-import model.Ville;
-import model.Ville;
 
 import java.sql.*;
 import java.util.ArrayList;
