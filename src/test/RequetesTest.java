@@ -49,6 +49,7 @@ public class RequetesTest {
         requete8();
         requete9();
         requete10();
+        requete11();
     }
 
 
@@ -292,11 +293,48 @@ public class RequetesTest {
         for (Agence agence : agences) {
             int nb = 0;
             for (Vehicule vehicule : vehicules) {
-                if (vehicule.getAgence().getId() == agence.getId() && vehicule.getNbkilometres() > 150000 && ((new Date().getTime() - vehicule.getDatemiseencirculation().getTime()) / 1000 / 60 / 60 / 24 / 365) > 2){
+                if (vehicule.getAgence().getId() == agence.getId() && vehicule.getNbkilometres() > 150000 && ((new Date().getTime() - vehicule.getDatemiseencirculation().getTime()) / 1000 / 60 / 60 / 24 / 365) > 2) {
                     nb += 1;
                 }
             }
             System.out.println("Nombre de véhicules de plus de 2 ans et plus de 150k KM pour l'agence " + (agence.getId() + " : " + nb));
+        }
+    }
+
+    public static void requete11() {
+        System.out.println(" -- Requête 11 -- ");
+
+        Dao agenceDao = new AgenceDaoImpl(connection);
+        Collection<Entity> agencesEntities = null;
+        Collection<Agence> agences = new ArrayList<>();
+        try {
+            agencesEntities = agenceDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        for (Entity agence : agencesEntities) agences.add((Agence) agence);
+
+        Dao factureDao = new FactureDaoImpl(connection);
+        Collection<Entity> entities = null;
+        Collection<Facture> factures = new ArrayList<>();
+        try {
+            entities = factureDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        for (Entity facture : entities) factures.add((Facture) facture);
+
+        System.out.print("Entrer une année : ");
+        int annee = scanner.nextInt();
+
+        for (Agence agence : agences) {
+            double ca = 0;
+            for (Facture facture : factures) {
+                if (facture.getContrat().getAgenceRetour().getId() == agence.getId() && facture.getContrat().getDateRetour().getYear() + 1900 == annee) {
+                    ca += facture.getMontant();
+                }
+            }
+            System.out.println("Chiffre d'affaire pour l'agence " + agence.getId() + " : " + ca);
         }
     }
 }
