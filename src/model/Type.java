@@ -2,34 +2,20 @@ package model;//package model;
 
 public class Type extends Entity {
 
-    private int id;
     private String libelle;
 
     public Type() {
         this(0);
     }
-
     public Type(int id) {
         this(id, null);
     }
-
     public Type(String libelle) {
-        this.libelle = libelle;
+        this(0, null);
     }
-
     public Type(int id, String libelle) {
-        super();
-
-        this.id = id;
+        super(id);
         this.libelle = libelle;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getLibelle() {

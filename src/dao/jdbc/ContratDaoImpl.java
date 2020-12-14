@@ -36,7 +36,7 @@ public class ContratDaoImpl extends JdbcDao {
                 contrat.setKmRetrait(resultSet.getInt("kmretrait"));
                 contrat.setKmRetour(resultSet.getInt("kmretour"));
                 contrat.setClient((Client) clientDao.findById(resultSet.getInt("idclient")));
-                contrat.setVehicule((Vehicule) vehiculeDao.findById(resultSet.getInt("immatriculation")));
+                contrat.setVehicule((Vehicule) vehiculeDao.findById( Integer.parseInt(resultSet.getString("immatriculation"))) );
                 contrat.setAgenceRetour((Agence) agenceDao.findById(resultSet.getInt("idagencederetour")));
                 contrats.add(contrat);
             }
@@ -63,7 +63,7 @@ public class ContratDaoImpl extends JdbcDao {
                 contrat.setKmRetrait(resultSet.getInt("kmretrait"));
                 contrat.setKmRetour(resultSet.getInt("kmretour"));
                 contrat.setClient((Client) clientDao.findById(resultSet.getInt("idclient")));
-                contrat.setVehicule((Vehicule) vehiculeDao.findById(resultSet.getInt("immatriculation")));
+                contrat.setVehicule((Vehicule) vehiculeDao.findById( Integer.parseInt(resultSet.getString("immatriculation"))) );
                 contrat.setAgenceRetour((Agence) agenceDao.findById(resultSet.getInt("idagencederetour")));
             }
         } catch (SQLException e) {
@@ -90,7 +90,7 @@ public class ContratDaoImpl extends JdbcDao {
             stmt.setInt(3, contrat.getKmRetrait());
             stmt.setInt(4, contrat.getKmRetour());
             stmt.setInt(5, contrat.getClient().getId());
-            stmt.setInt(6, contrat.getVehicule().getImmatriculation());
+            stmt.setString(6, contrat.getVehicule().getImmatriculation());
             stmt.setInt(7, contrat.getAgenceRetour().getId());
 
             int res = stmt.executeUpdate();
@@ -126,7 +126,7 @@ public class ContratDaoImpl extends JdbcDao {
             stmt.setInt(3, contrat.getKmRetrait());
             stmt.setInt(4, contrat.getKmRetour());
             stmt.setInt(5, contrat.getClient().getId());
-            stmt.setInt(6, contrat.getVehicule().getImmatriculation());
+            stmt.setString(6, contrat.getVehicule().getImmatriculation());
             stmt.setInt(7, contrat.getAgenceRetour().getId());
 
             int res = stmt.executeUpdate();

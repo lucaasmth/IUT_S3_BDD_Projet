@@ -2,7 +2,6 @@ package model;//package model;
 
 public class Categorie extends Entity {
 
-    private int id;
     private String libelle;
 
     public Categorie() {
@@ -14,22 +13,12 @@ public class Categorie extends Entity {
     }
 
     public Categorie(String libelle) {
-        this.libelle = libelle;
+        this(0, libelle);
     }
 
     public Categorie(int id, String libelle) {
-        super();
-
-        this.id = id;
+        super(id);
         this.libelle = libelle;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getLibelle() {

@@ -2,7 +2,7 @@ package model;//package model;
 
 public class Vehicule extends Entity {
 
-    private int immatriculation;
+    private String immatriculation;
     private String datemiseencirculation;
     private String etat;
     private int nbkilometres;
@@ -14,30 +14,19 @@ public class Vehicule extends Entity {
     private Agence agence;
 
     public Vehicule() {
-        this(0);
+        this("0");
     }
 
-    public Vehicule(int immatriculation) {
-        this(immatriculation, null, null, 0, 0, null, null, null, null, null);
+    public Vehicule(String immatriculation) {
+        this(immatriculation, null, 0, 0, null, null, null, null, null);
     }
 
-    public Vehicule(String datemiseencirculation, String date, int nbkilometres, double prixparjourdelocation, Marque marque, Modele modele, Categorie categorie, Type type, Agence agence) {
-        this.datemiseencirculation = datemiseencirculation;
-        this.etat = etat;
-        this.nbkilometres = nbkilometres;
-        this.prixparjourdelocation = prixparjourdelocation;
-        this.marque = marque;
-        this.modele = modele;
-        this.categorie = categorie;
-        this.type = type;
-        this.agence = agence;
-    }
+    public Vehicule(String immatriculation, String datemiseencirculation,
+                    int nbkilometres, double prixparjourdelocation, Marque marque,
+                    Modele modele, Categorie categorie, Type type, Agence agence) {
 
-    public Vehicule(int immatriculation, String datemiseencirculation, String date, int nbkilometres, double prixparjourdelocation, Marque marque, Modele modele, Categorie categorie, Type type, Agence agence) {
-        super();
-
+        super(0);
         this.immatriculation = immatriculation;
-
         this.datemiseencirculation = datemiseencirculation;
         this.etat = etat;
         this.nbkilometres = nbkilometres;
@@ -49,10 +38,10 @@ public class Vehicule extends Entity {
         this.agence = agence;
     }
 
-    public int getImmatriculation() {
+    public String getImmatriculation() {
         return immatriculation;
     }
-    public void setImmatriculation(int immatriculation) {
+    public void setImmatriculation(String immatriculation) {
         this.immatriculation = immatriculation;
     }
 

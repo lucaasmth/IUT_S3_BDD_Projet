@@ -1,38 +1,30 @@
 package model;
 
 public class Client extends Entity {
-    private int id;
+
     private String nom;
     private String adresse;
     private int codePostal;
     private Ville ville;
 
     public Client() {
-
+        this(0);
     }
 
     public Client(int id) {
-        this.id = id;
+        this(id, null, null, 0, null);
     }
 
     public Client(String nom) {
-        this.nom = nom;
+        this(0, nom, null, 0, null);
     }
 
     public Client(int id, String nom, String adresse, int codePostal, Ville ville) {
-        this.id = id;
+        super(id);
         this.nom = nom;
         this.adresse = adresse;
         this.codePostal = codePostal;
         this.ville = ville;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNom() {

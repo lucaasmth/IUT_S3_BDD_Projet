@@ -27,7 +27,7 @@ public class AgenceDaoImpl extends JdbcDao {
             while (resultSet.next()) {
                 Agence agence = new Agence();
                 agence.setId(resultSet.getInt("idagence"));
-                agence.setNbEmployes(resultSet.getInt("nbemployees"));
+                agence.setNbEmployes(resultSet.getInt("nbemployes"));
                 agence.setVille((Ville) villeDao.findById(resultSet.getInt("idville")));
                 agences.add(agence);
             }
@@ -49,7 +49,7 @@ public class AgenceDaoImpl extends JdbcDao {
             if(resultSet.next()){
                 agence = new Agence();
                 agence.setId(resultSet.getInt("idagence"));
-                agence.setNbEmployes(resultSet.getInt("nbemployees"));
+                agence.setNbEmployes(resultSet.getInt("nbemployes"));
                 agence.setVille((Ville) villeDao.findById(resultSet.getInt("idville")));
             }
         } catch (SQLException e) {
@@ -65,7 +65,7 @@ public class AgenceDaoImpl extends JdbcDao {
 
         PreparedStatement stmt= null;
 
-        String sqlReq = "INSERT INTO agence(nbemployees, idville) VALUES (?, ?)";
+        String sqlReq = "INSERT INTO agence(nbemployes, idville) VALUES (?, ?)";
 
         try {
 
@@ -97,7 +97,7 @@ public class AgenceDaoImpl extends JdbcDao {
     public void update(Entity entity) throws DaoException {
         Agence agence = (Agence) entity;
         PreparedStatement stmt;
-        String sqlReq = "UPDATE agence SET nbemployees = ?, idville = ? WHERE idagence = ?";
+        String sqlReq = "UPDATE agence SET nbemployes = ?, idville = ? WHERE idagence = ?";
 
         try {
             stmt = connection.prepareStatement(sqlReq);

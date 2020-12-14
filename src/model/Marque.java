@@ -1,7 +1,7 @@
 package model;
 
 public class Marque extends Entity {
-    private int id;
+
     private String nom;
 
     public Marque() {
@@ -13,21 +13,12 @@ public class Marque extends Entity {
     }
 
     public Marque(String nom) {
-        this.nom = nom;
+        this(0, nom);
     }
 
     public Marque(int id, String nom) {
-        super();
-        this.id = id;
+        super(id);
         this.nom = nom;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNom() {

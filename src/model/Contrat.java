@@ -1,9 +1,9 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Contrat extends Entity {
-    private int id;
+
     private Date dateRetrait;
     private Date dateRetour;
     private int kmRetrait;
@@ -13,11 +13,11 @@ public class Contrat extends Entity {
     private Agence agenceRetour;
 
     public Contrat() {
-
+        this(0, null, null, 0, 0, null, null, null);
     }
 
     public Contrat(int id, Date dateRetrait, Date dateRetour, int kmRetrait, int kmRetour, Client client, Vehicule vehicule, Agence agenceRetour) {
-        this.id = id;
+        super(id);
         this.dateRetrait = dateRetrait;
         this.dateRetour = dateRetour;
         this.kmRetrait = kmRetrait;
@@ -25,14 +25,6 @@ public class Contrat extends Entity {
         this.client = client;
         this.vehicule = vehicule;
         this.agenceRetour = agenceRetour;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Date getDateRetrait() {

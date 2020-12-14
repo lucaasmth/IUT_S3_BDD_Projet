@@ -2,7 +2,6 @@ package model;//package model;
 
 public class Modele extends Entity {
 
-    private int id;
     private String denomination;
     private int puissancefiscale;
 
@@ -15,23 +14,13 @@ public class Modele extends Entity {
     }
 
     public Modele(String denomination, int puissancefiscale) {
-        this.denomination = denomination;
-        this.puissancefiscale = puissancefiscale;
+        this(0, denomination, puissancefiscale);
     }
 
     public Modele(int id, String denomination, int puissancefiscale) {
-        super();
-
-        this.id = id;
+        super(id);
         this.denomination = denomination;
         this.puissancefiscale = puissancefiscale;
-    }
-
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDenomination() {
