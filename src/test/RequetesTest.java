@@ -48,6 +48,7 @@ public class RequetesTest {
         //requete7();
         requete8();
         requete9();
+        requete10();
     }
 
 
@@ -262,6 +263,40 @@ public class RequetesTest {
                 }
             }
             System.out.println("Chiffre d'affaire pour " + ((Type) type).getLibelle() + " : " + ca);
+        }
+    }
+
+    public static void requete10() {
+        System.out.println(" -- Requête 10 -- ");
+
+        Dao vehiculeDao = new VehiculeDaoImpl(connection);
+        Collection<Entity> entities = null;
+        Collection<Vehicule> vehicules = new ArrayList<>();
+        try {
+            entities = vehiculeDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        for (Entity vehicule : entities) vehicules.add((Vehicule) vehicule);
+
+        Dao agenceDao = new AgenceDaoImpl(connection);
+        Collection<Entity> agencesEntities = null;
+        Collection<Agence> agences = new ArrayList<>();
+        try {
+            agencesEntities = agenceDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        for (Entity agence : agencesEntities) agences.add((Agence) agence);
+
+        for (Agence agence : agences) {
+            int nb = 0;
+            for (Vehicule vehicule : vehicules) {
+                if (vehicule.getAgence().getId() == agence.getId() && vehicule.getNbkilometres() > 150000 && ((new Date().getTime() - vehicule.getDatemiseencirculation().getTime()) / 1000 / 60 / 60 / 24 / 365) > 2){
+                    nb += 1;
+                }
+            }
+            System.out.println("Nombre de véhicules de plus de 2 ans et plus de 150k KM pour l'agence " + (agence.getId() + " : " + nb));
         }
     }
 }
