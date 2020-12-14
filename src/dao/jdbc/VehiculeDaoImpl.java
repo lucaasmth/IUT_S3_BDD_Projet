@@ -72,7 +72,7 @@ public class VehiculeDaoImpl extends JdbcDao {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicule WHERE immatriculation = " + immatriculation);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicule WHERE immatriculation = '" + immatriculation + "'");
 
             if(resultSet.next()){
                 vehicule = new Vehicule();
