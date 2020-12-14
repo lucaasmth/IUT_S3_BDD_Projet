@@ -45,7 +45,7 @@ public class RequetesTest {
 
         requete5();*/
         //requete6();
-        //requete7();
+        requete7();
         requete8();
         requete9();
         requete10();
@@ -196,9 +196,9 @@ public class RequetesTest {
         System.out.print("Entrer l'ID de l'agence à rechercher: ");
         int agenceId = scanner.nextInt();
         System.out.print("Entrer l'année à rechercher: ");
-        String annee = scanner.next();
+        int annee = scanner.nextInt();
         for (Contrat contrat : contrats) {
-            if (contrat.getAgenceRetour().getId() == agenceId) {
+            if (contrat.getAgenceRetour().getId() == agenceId && contrat.getDateRetour().getYear() + 1900 == annee) {
                 System.out.println(contrat.getClient().getNom());
             }
         }
