@@ -1,9 +1,11 @@
 package model;//package model;
 
+import java.sql.Date;
+
 public class Vehicule extends Entity {
 
     private String immatriculation;
-    private String datemiseencirculation;
+    private Date datemiseencirculation;
     private String etat;
     private int nbkilometres;
     private double prixparjourdelocation;
@@ -21,7 +23,7 @@ public class Vehicule extends Entity {
         this(immatriculation, null, 0, 0, null, null, null, null, null);
     }
 
-    public Vehicule(String immatriculation, String datemiseencirculation,
+    public Vehicule(String immatriculation, Date datemiseencirculation,
                     int nbkilometres, double prixparjourdelocation, Marque marque,
                     Modele modele, Categorie categorie, Type type, Agence agence) {
 
@@ -45,10 +47,10 @@ public class Vehicule extends Entity {
         this.immatriculation = immatriculation;
     }
 
-    public String getDatemiseencirculation() {
+    public Date getDatemiseencirculation() {
         return datemiseencirculation;
     }
-    public void setDatemiseencirculation(String datemiseencirculation) {
+    public void setDatemiseencirculation(Date datemiseencirculation) {
         this.datemiseencirculation = datemiseencirculation;
     }
 

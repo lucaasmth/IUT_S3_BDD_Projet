@@ -42,7 +42,7 @@ public class VehiculeDaoImpl extends JdbcDao {
             while (resultSet.next()) {
                 Vehicule vehicule = new Vehicule();
                 vehicule.setImmatriculation(resultSet.getString("immatriculation"));
-                vehicule.setDatemiseencirculation(resultSet.getString("datemiseencirculation"));
+                vehicule.setDatemiseencirculation(resultSet.getDate("datemiseencirculation"));
                 vehicule.setEtat(resultSet.getString("etat"));
                 vehicule.setNbkilometres(resultSet.getInt("nbkilometres"));
                 vehicule.setPrixparjourdelocation(resultSet.getDouble("prixparjourdelocation"));
@@ -63,17 +63,21 @@ public class VehiculeDaoImpl extends JdbcDao {
     }
 
     @Override
-    public Entity findById(int immatriculation) throws DaoException {
+    public Entity findById(int id) throws DaoException {
+        return null;
+    }
+
+    public Entity findByImmatriculation(String immatriculation) throws DaoException {
         Vehicule vehicule = null;
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicule WHERE immatriculation="+(immatriculation+""));
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicule WHERE immatriculation = " + immatriculation);
 
             if(resultSet.next()){
                 vehicule = new Vehicule();
                 vehicule.setImmatriculation(resultSet.getString("immatriculation"));
-                vehicule.setDatemiseencirculation(resultSet.getString("datemiseencirculation"));
+                vehicule.setDatemiseencirculation(resultSet.getDate("datemiseencirculation"));
                 vehicule.setEtat(resultSet.getString("etat"));
                 vehicule.setNbkilometres(resultSet.getInt("nbkilometres"));
                 vehicule.setPrixparjourdelocation(resultSet.getDouble("prixparjourdelocation"));
@@ -100,12 +104,11 @@ public class VehiculeDaoImpl extends JdbcDao {
         PreparedStatement stmt= null;
 
         String sqlReq = "insert into vehicule(datemiseencirculation, etat, nbkilometres, prixparjourdelocation, idmarque, idmodele, idcategorie, idtype, idagence) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
         try {
 
             stmt = connection.prepareStatement(sqlReq);
 
-            stmt.setString(1, vehicule.getDatemiseencirculation());
+            stmt.setDate(1, vehicule.getDatemiseencirculation());
             stmt.setString(2, vehicule.getEtat());
             stmt.setInt(3, vehicule.getNbkilometres());
             stmt.setDouble(4, vehicule.getPrixparjourdelocation());
@@ -139,12 +142,12 @@ public class VehiculeDaoImpl extends JdbcDao {
     public void update(Entity entity) throws DaoException {
         Vehicule vehicule = (Vehicule) entity;
         PreparedStatement stmt;
-        String sqlReq = "UPDATE vehicule SET datemiseencirculation = ?, etat = ?, nbkilometres = ?, prixparjourdelocation = ?, idmarque = ?, idmodele = ?, idcategorie = ?, idtype = ?, idagence = ?, WHERE immatriculation = ?";
+        String sqlReq = "UPDATE vehicule SET datemiseencirculation = ?, etat = ?, nbkilometres = ?, prixparjourdelocation = ?, idmarque = ?, idmodele = ?, idcategorie = ?, idtype = ?, idagence = ? WHERE immatriculation = ?";
 
         try {
             stmt = connection.prepareStatement(sqlReq);
 
-            stmt.setString(1, vehicule.getDatemiseencirculation());
+            stmt.setDate(1, vehicule.getDatemiseencirculation());
             stmt.setString(2, vehicule.getEtat());
             stmt.setInt(3, vehicule.getNbkilometres());
             stmt.setDouble(4, vehicule.getPrixparjourdelocation());

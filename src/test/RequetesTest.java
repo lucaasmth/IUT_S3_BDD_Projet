@@ -13,11 +13,13 @@ public class RequetesTest {
 
     private static Connection connection;
     private static Dao dao;
+    private static Scanner scanner;
 
     public static void main(String[] args) {
         connection = PostgresConnection.getInstance();
+        scanner  = new Scanner(System.in);
 
-        Dao vehiculeDao = new VehiculeDaoImpl(connection);
+        /*Dao vehiculeDao = new VehiculeDaoImpl(connection);
         Dao clientDao = new ClientDaoImpl(connection);
         Dao agenceDao = new AgenceDaoImpl(connection);
         Dao contratDao = new ContratDaoImpl(connection);
@@ -41,8 +43,9 @@ public class RequetesTest {
             e.printStackTrace();
         }
 
-        requete5();
-        requete6();
+        requete5();*/
+        //requete6();
+        requete7();
     }
 
 
@@ -172,12 +175,34 @@ public class RequetesTest {
         }
         for (Entity vehicule : entities) vehicules.add((Vehicule) vehicule);
 
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Entrer la marque à rechercher: ");
         String marque = scanner.next();
         for (Vehicule vehicule : vehicules) {
             if (vehicule.getMarque().getNom().equals(marque))
                 System.out.println(vehicule.getModele().getDenomination());
+        }
+    }
+
+    public static void requete7() {
+        System.out.println(" -- Requête 7 -- ");
+        Dao contratDao = new ContratDaoImpl(connection);
+        Collection<Entity> entities = null;
+        Collection<Contrat> contrats = new ArrayList<>();
+        try {
+            entities = contratDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        for (Entity contrat : entities) contrats.add((Contrat) contrat);
+
+        System.out.print("Entrer l'ID de l'agence à rechercher: ");
+        int agenceId = scanner.nextInt();
+        System.out.print("Entrer l'année à rechercher: ");
+        String annee = scanner.next();
+        for (Contrat contrat : contrats) {
+            if (contrat.getAgenceRetour().getId() == agenceId){
+                System.out.println(contrat.getClient().getNom());
+            }
         }
     }
 }

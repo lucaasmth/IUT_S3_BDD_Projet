@@ -36,7 +36,7 @@ public class ContratDaoImpl extends JdbcDao {
                 contrat.setKmRetrait(resultSet.getInt("kmretrait"));
                 contrat.setKmRetour(resultSet.getInt("kmretour"));
                 contrat.setClient((Client) clientDao.findById(resultSet.getInt("idclient")));
-                contrat.setVehicule((Vehicule) vehiculeDao.findById( Integer.parseInt(resultSet.getString("immatriculation"))) );
+                contrat.setVehicule((Vehicule) vehiculeDao.findByImmatriculation(resultSet.getString("immatriculation")));
                 contrat.setAgenceRetour((Agence) agenceDao.findById(resultSet.getInt("idagencederetour")));
                 contrats.add(contrat);
             }
@@ -53,9 +53,9 @@ public class ContratDaoImpl extends JdbcDao {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM contrat WHERE idcontrat="+id);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM contrat WHERE idcontrat=" + id);
 
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 contrat = new Contrat();
                 contrat.setId(resultSet.getInt("idcontrat"));
                 contrat.setDateRetour(resultSet.getDate("datederetrait"));
@@ -63,7 +63,7 @@ public class ContratDaoImpl extends JdbcDao {
                 contrat.setKmRetrait(resultSet.getInt("kmretrait"));
                 contrat.setKmRetour(resultSet.getInt("kmretour"));
                 contrat.setClient((Client) clientDao.findById(resultSet.getInt("idclient")));
-                contrat.setVehicule((Vehicule) vehiculeDao.findById( Integer.parseInt(resultSet.getString("immatriculation"))) );
+                contrat.setVehicule((Vehicule) vehiculeDao.findByImmatriculation(resultSet.getString("immatriculation")));
                 contrat.setAgenceRetour((Agence) agenceDao.findById(resultSet.getInt("idagencederetour")));
             }
         } catch (SQLException e) {
@@ -77,7 +77,7 @@ public class ContratDaoImpl extends JdbcDao {
     public void create(Entity entity) throws DaoException {
         Contrat contrat = (Contrat) entity;
 
-        PreparedStatement stmt= null;
+        PreparedStatement stmt = null;
 
         String sqlReq = "INSERT INTO contrat(datederetrait, datederetour, kmretrait, kmretour, idclient, immatriculation, idagencederetour) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -85,8 +85,8 @@ public class ContratDaoImpl extends JdbcDao {
 
             stmt = connection.prepareStatement(sqlReq);
 
-            stmt.setDate(1, contrat.getDateRetrait());
-            stmt.setDate(2, contrat.getDateRetour());
+            stmt.setDate(1, (Date) contrat.getDateRetrait());
+            stmt.setDate(2, (Date) contrat.getDateRetour());
             stmt.setInt(3, contrat.getKmRetrait());
             stmt.setInt(4, contrat.getKmRetour());
             stmt.setInt(5, contrat.getClient().getId());
@@ -121,8 +121,8 @@ public class ContratDaoImpl extends JdbcDao {
         try {
             stmt = connection.prepareStatement(sqlReq);
 
-            stmt.setDate(1, contrat.getDateRetrait());
-            stmt.setDate(2, contrat.getDateRetour());
+            stmt.setDate(1, (Date) contrat.getDateRetrait());
+            stmt.setDate(2, (Date) contrat.getDateRetour());
             stmt.setInt(3, contrat.getKmRetrait());
             stmt.setInt(4, contrat.getKmRetour());
             stmt.setInt(5, contrat.getClient().getId());
@@ -145,13 +145,13 @@ public class ContratDaoImpl extends JdbcDao {
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            String sqlReq = "DELETE FROM contrat WHERE idcontrat = "+contrat.getId();
+            String sqlReq = "DELETE FROM contrat WHERE idcontrat = " + contrat.getId();
 
             int res = statement.executeUpdate(sqlReq);
             if (res > 0) System.out.println("ligne supprimé");
             else System.out.println("contrat introuvable");
 
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.err.println("Erreur SQL : " + e.getLocalizedMessage());
         }
 
