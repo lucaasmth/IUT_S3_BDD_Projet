@@ -17,7 +17,7 @@ public class RequetesTest {
 
     public static void main(String[] args) {
         connection = PostgresConnection.getInstance();
-        scanner  = new Scanner(System.in);
+        scanner = new Scanner(System.in);
 
         /*Dao vehiculeDao = new VehiculeDaoImpl(connection);
         Dao clientDao = new ClientDaoImpl(connection);
@@ -45,13 +45,14 @@ public class RequetesTest {
 
         requete5();*/
         //requete6();
-        requete7();
+        //requete7();
+        requete8();
+        requete9();
     }
 
 
-
     /* 2 */
-    public static Contrat locationVehicule(Vehicule vehicule, Client client, Date date, int dureeJours){
+    public static Contrat locationVehicule(Vehicule vehicule, Client client, Date date, int dureeJours) {
 
         System.out.println(" -- Requête 2 -- ");
         Dao contratDao = new ContratDaoImpl(connection);
@@ -83,14 +84,13 @@ public class RequetesTest {
     }
 
 
-
     /* 3 */
-    public static void finContrat(Contrat contrat, Agence agenceRetour){
+    public static void finContrat(Contrat contrat, Agence agenceRetour) {
 
         System.out.println(" -- Requête 3 -- ");
         Dao contratDao = new ContratDaoImpl(connection);
 
-        if(contrat.getAgenceRetour().equals(agenceRetour))
+        if (contrat.getAgenceRetour().equals(agenceRetour))
             return;
 
         contrat.setAgenceRetour(agenceRetour);
@@ -105,9 +105,8 @@ public class RequetesTest {
     }
 
 
-
     /* 4 */
-    public static void makeFacture(Contrat contrat){
+    public static void makeFacture(Contrat contrat) {
 
         System.out.println(" -- Requête 4 -- ");
         Dao factureDao = new FactureDaoImpl(connection);
@@ -128,8 +127,6 @@ public class RequetesTest {
             e.printStackTrace();
         }
     }
-
-
 
 
     // 5. Le chiffre d’affaire d’une agence donnée pour un mois donné.
@@ -155,12 +152,11 @@ public class RequetesTest {
 
         for (Facture facture : factures) {
             if (facture.getContrat().getAgenceRetour().getId() == id)
-                ca+= facture.getMontant();
+                ca += facture.getMontant();
         }
 
-        System.out.print("Le chiffre d'affaire de l'agence "+id+" est de "+ca+" €");
+        System.out.print("Le chiffre d'affaire de l'agence " + id + " est de " + ca + " €");
     }
-
 
 
     public static void requete6() {
@@ -200,9 +196,72 @@ public class RequetesTest {
         System.out.print("Entrer l'année à rechercher: ");
         String annee = scanner.next();
         for (Contrat contrat : contrats) {
-            if (contrat.getAgenceRetour().getId() == agenceId){
+            if (contrat.getAgenceRetour().getId() == agenceId) {
                 System.out.println(contrat.getClient().getNom());
             }
+        }
+        //TODO Améliorer
+    }
+
+    public static void requete8() {
+        System.out.println(" -- Requête 8 -- ");
+        Dao factureDao = new FactureDaoImpl(connection);
+        Collection<Entity> entities = null;
+        Collection<Facture> factures = new ArrayList<>();
+        try {
+            entities = factureDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        for (Entity facture : entities) factures.add((Facture) facture);
+
+        Dao categorieDao = new CategorieDaoImpl(connection);
+        Collection<Entity> categorieEntities = null;
+        try {
+            categorieEntities = categorieDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+
+        for (Entity categorie : categorieEntities) {
+            double ca = 0;
+            for (Facture facture : factures) {
+                if (facture.getContrat().getVehicule().getCategorie().getId() == categorie.getId()) {
+                    ca += facture.getMontant();
+                }
+            }
+            System.out.println("Chiffre d'affaire pour " + ((Categorie) categorie).getLibelle() + " : " + ca);
+        }
+    }
+
+    public static void requete9() {
+        System.out.println(" -- Requête 9 -- ");
+        Dao factureDao = new FactureDaoImpl(connection);
+        Collection<Entity> entities = null;
+        Collection<Facture> factures = new ArrayList<>();
+        try {
+            entities = factureDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        for (Entity facture : entities) factures.add((Facture) facture);
+
+        Dao typeDao = new TypeDaoImpl(connection);
+        Collection<Entity> typeEntities = null;
+        try {
+            typeEntities = typeDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+
+        for (Entity type : typeEntities) {
+            double ca = 0;
+            for (Facture facture : factures) {
+                if (facture.getContrat().getVehicule().getType().getId() == type.getId()) {
+                    ca += facture.getMontant();
+                }
+            }
+            System.out.println("Chiffre d'affaire pour " + ((Type) type).getLibelle() + " : " + ca);
         }
     }
 }
