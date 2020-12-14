@@ -31,8 +31,8 @@ public class ContratDaoImpl extends JdbcDao {
             while (resultSet.next()) {
                 Contrat contrat = new Contrat();
                 contrat.setId(resultSet.getInt("idcontrat"));
-                contrat.setDateRetour(resultSet.getDate("datederetrait"));
-                contrat.setDateRetrait(resultSet.getDate("datederetour"));
+                contrat.setDateRetour(resultSet.getDate("datederetour"));
+                contrat.setDateRetrait(resultSet.getDate("datederetrait"));
                 contrat.setKmRetrait(resultSet.getInt("kmretrait"));
                 contrat.setKmRetour(resultSet.getInt("kmretour"));
                 contrat.setClient((Client) clientDao.findById(resultSet.getInt("idclient")));
@@ -58,8 +58,8 @@ public class ContratDaoImpl extends JdbcDao {
             if (resultSet.next()) {
                 contrat = new Contrat();
                 contrat.setId(resultSet.getInt("idcontrat"));
-                contrat.setDateRetour(resultSet.getDate("datederetrait"));
-                contrat.setDateRetrait(resultSet.getDate("datederetour"));
+                contrat.setDateRetour(resultSet.getDate("datederetour"));
+                contrat.setDateRetrait(resultSet.getDate("datederetrait"));
                 contrat.setKmRetrait(resultSet.getInt("kmretrait"));
                 contrat.setKmRetour(resultSet.getInt("kmretour"));
                 contrat.setClient((Client) clientDao.findById(resultSet.getInt("idclient")));
@@ -85,8 +85,8 @@ public class ContratDaoImpl extends JdbcDao {
 
             stmt = connection.prepareStatement(sqlReq);
 
-            stmt.setDate(1, (Date) contrat.getDateRetrait());
-            stmt.setDate(2, (Date) contrat.getDateRetour());
+            stmt.setDate(1, new Date(contrat.getDateRetrait().getTime()));
+            stmt.setDate(2, new Date(contrat.getDateRetour().getTime()));
             stmt.setInt(3, contrat.getKmRetrait());
             stmt.setInt(4, contrat.getKmRetour());
             stmt.setInt(5, contrat.getClient().getId());
@@ -121,8 +121,8 @@ public class ContratDaoImpl extends JdbcDao {
         try {
             stmt = connection.prepareStatement(sqlReq);
 
-            stmt.setDate(1, (Date) contrat.getDateRetrait());
-            stmt.setDate(2, (Date) contrat.getDateRetour());
+            stmt.setDate(1, new Date(contrat.getDateRetrait().getTime()));
+            stmt.setDate(2, new Date(contrat.getDateRetour().getTime()));
             stmt.setInt(3, contrat.getKmRetrait());
             stmt.setInt(4, contrat.getKmRetour());
             stmt.setInt(5, contrat.getClient().getId());

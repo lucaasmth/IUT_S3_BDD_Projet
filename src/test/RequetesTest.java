@@ -19,32 +19,27 @@ public class RequetesTest {
         connection = PostgresConnection.getInstance();
         scanner = new Scanner(System.in);
 
-        /*Dao vehiculeDao = new VehiculeDaoImpl(connection);
+        VehiculeDaoImpl vehiculeDao = new VehiculeDaoImpl(connection);
         Dao clientDao = new ClientDaoImpl(connection);
         Dao agenceDao = new AgenceDaoImpl(connection);
-        Dao contratDao = new ContratDaoImpl(connection);
 
         try {
-            Vehicule vehicule = (Vehicule) vehiculeDao.findById(1);
+            Vehicule vehicule = (Vehicule) vehiculeDao.findByImmatriculation("1");
             Client client = (Client) clientDao.findById(1);
             Agence agence = (Agence) agenceDao.findById(1);
 
             Date today = new Date();
             int dureeJours = 5;
 
-            Contrat contrat;
-
-            contrat = locationVehicule(vehicule, client, today, dureeJours);
+            Contrat contrat = locationVehicule(vehicule, client, today, dureeJours);
             finContrat(contrat, agence);
-
-            contratDao.delete(contrat);
 
         } catch (DaoException e) {
             e.printStackTrace();
         }
 
-        requete5();*/
-        //requete6();
+        requete5();
+        requete6();
         requete7();
         requete8();
         requete9();
@@ -146,7 +141,6 @@ public class RequetesTest {
         }
         for (Entity facture : entities) factures.add((Facture) facture);
 
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Entrer l'id de l'agence que vous voulez : ");
         int id = scanner.nextInt();
 
@@ -193,16 +187,42 @@ public class RequetesTest {
         }
         for (Entity contrat : entities) contrats.add((Contrat) contrat);
 
+        Dao clientDao = new ClientDaoImpl(connection);
+        Collection<Entity> clientEntities = null;
+        Collection<Client> clients = new ArrayList<>();
+        try {
+            clientEntities = clientDao.findAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        for (Entity client : clientEntities) clients.add((Client) client);
+
         System.out.print("Entrer l'ID de l'agence à rechercher: ");
         int agenceId = scanner.nextInt();
         System.out.print("Entrer l'année à rechercher: ");
         int annee = scanner.nextInt();
-        for (Contrat contrat : contrats) {
-            if (contrat.getAgenceRetour().getId() == agenceId && contrat.getDateRetour().getYear() + 1900 == annee) {
-                System.out.println(contrat.getClient().getNom());
+
+        Client clientMax = null;
+        int max = 0;
+
+        for (Client client : clients) {
+            int nb = 0;
+            for (Contrat contrat : contrats) {
+                if (contrat.getDateRetour() != null && contrat.getAgenceRetour().getId() == agenceId && contrat.getDateRetour().getYear() + 1900 == annee && contrat.getClient().getId() == client.getId()) {
+                    nb++;
+                }
+            }
+            if (nb > max) {
+                max = nb;
+                clientMax = client;
             }
         }
-        //TODO Améliorer
+
+        if (clientMax == null) {
+            System.out.println("Aucun client trouvé!");
+        } else {
+            System.out.println(clientMax.getNom());
+        }
     }
 
     public static void requete8() {
@@ -330,7 +350,7 @@ public class RequetesTest {
         for (Agence agence : agences) {
             double ca = 0;
             for (Facture facture : factures) {
-                if (facture.getContrat().getAgenceRetour().getId() == agence.getId() && facture.getContrat().getDateRetour().getYear() + 1900 == annee) {
+                if (facture.getContrat().getDateRetour() != null && facture.getContrat().getAgenceRetour().getId() == agence.getId() && facture.getContrat().getDateRetour().getYear() + 1900 == annee) {
                     ca += facture.getMontant();
                 }
             }
